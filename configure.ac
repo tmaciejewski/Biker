@@ -1,9 +1,9 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.64])
-AC_INIT([kolarz], [1.0], [ponton@jabster.pl])
-AC_CONFIG_SRCDIR([src/kolarz.cpp])
+AC_PREREQ(2.64)
+AC_INIT([biker],[1.0],[ponton@jabster.pl])
+AC_CONFIG_SRCDIR([src/main.cpp])
 AC_CONFIG_HEADERS([config.h])
 
 AM_INIT_AUTOMAKE([foreign])

@@ -1,5 +1,5 @@
 LIBS = -lSDL -lGL -lGLU
 CPPFLAGS = -O2 -Wall
 
-bin_PROGRAMS = kolarz
-kolarz_SOURCES = track.cpp kolarz.cpp object.cpp
+bin_PROGRAMS = biker
+biker_SOURCES = track.cpp main.cpp object.cpp
