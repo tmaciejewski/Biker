@@ -1,4 +1,4 @@
-LDFLAGS = -lSDL -lGL -lGLU
+LIBS = -lSDL -lGL -lGLU
 CPPFLAGS = -O2 -Wall
 
 bin_PROGRAMS = kolarz

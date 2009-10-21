@@ -21,14 +21,21 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <GL/gl.h>
+
 class Object
 {
 	public:
 		Object();
 		virtual ~Object();
 
-	private:
-		/* add your private declarations */
+        virtual void update() = 0;
+        virtual void display() = 0;
+        virtual void reset() = 0;
+
+	protected:
+
+        GLfloat x, y;
 };
 
 #endif /* OBJECT_H */
