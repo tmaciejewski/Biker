@@ -21,13 +21,21 @@
 #ifndef TRACK_H
 #define TRACK_H
 
-class Track
-{
-	public:
-		Track();
+#include "object.h"
 
-	private:
-		/* add your private declarations */
+class Track : public Object
+{
+    public:
+        Track(float _w = 30, float _ratio = 1.0);
+
+        void display();
+
+    private:
+
+        float w, ratio;
+
+        void drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter, float r1, float r2, int pieces = 32);
+
 };
 
 #endif /* TRACK_H */

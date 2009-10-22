@@ -19,11 +19,37 @@
 
 
 #include "track.h"
+#include <cmath>
+#include <iostream>
 
-
-Track::Track()
+Track::Track(float _w, float _ratio) : Object(), w(_w), ratio(_ratio)
 {
 
 }
 
+void Track::drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter, float r1, float r2, int pieces)
+{
+    glBegin(GL_TRIANGLE_FAN);
+        glVertex3f(xcenter, ycenter, zcenter);
+        for(int i = -pieces/2; i <= pieces/2; ++i)
+        {
+            float angle = M_PI * i / float(pieces/2);
+            GLfloat x = xcenter + r1*sin(angle);
+            GLfloat y = ycenter;
+            GLfloat z = zcenter + r2*cos(angle);
+            glVertex3f(x, y, z);
+        }
+    glEnd();
+}
 
+void Track::display()
+{
+    glPushMatrix();
+    glColor3f(0.0, 1.0, 0.0);
+    drawEllipse(x, 0.0, y, 10*w, 10*w);         // outer field
+    glColor3f(0.23, 0.23, 0.23);
+    drawEllipse(x, 0.0, y, w, ratio*w);         // track
+    glColor3f(0.0, 1.0, 0.0);
+    drawEllipse(x, 0.0, y, (w-3), ratio*(w-3)); // inner field
+    glPopMatrix();
+}
