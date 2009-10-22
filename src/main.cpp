@@ -25,16 +25,35 @@
 #include <cmath>
 #include <ctime>
 #include <unistd.h>
+#include <vector>
 
-#define PI 3.141592
+#include "track.h"
+
+#include "../config.h"
 
 class Game
 {
     GLfloat screenWidth, screenHeight;
-    bool keyPressed[SDLK_LAST];
+    std::vector<bool> keyPressed;
+    GLfloat a, b;
+    bool fullScreen;
+
+    Track track;
 
     void update()
     {
+        if (keyPressed[SDLK_LEFT])
+            a -= 0.1;
+
+        if (keyPressed[SDLK_RIGHT])
+            a += 0.1;
+
+        if (keyPressed[SDLK_UP])
+            b += 1.0;
+
+        if (keyPressed[SDLK_DOWN])
+            b -= 1.0;
+
     }
 
     void reshape()
@@ -51,16 +70,19 @@ class Game
     {
         reshape();
         glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.3, 0.3, 0.6, 1.0);
         glLoadIdentity();
-
-
+        glTranslatef(0.0, -1.0, 2*b);
+        glRotatef(a, 1.0, 0.0, 0.0);
+        track.display();
         glFlush();
     }
 
     SDL_Surface * setVideoMode()
     {
         SDL_Surface *surface;
-        if ((surface = SDL_SetVideoMode(screenWidth, screenHeight, 0, SDL_OPENGL | SDL_RESIZABLE)) == NULL)
+        int flags = SDL_OPENGL | SDL_RESIZABLE | (fullScreen ? SDL_FULLSCREEN : 0);
+        if ((surface = SDL_SetVideoMode(screenWidth, screenHeight, 0, flags)) == NULL)
         {
             std::cerr << "Unable to create OpenGL screen: " << SDL_GetError() << '\n';
             SDL_Quit();
@@ -72,7 +94,8 @@ class Game
 
     public:
 
-    Game() : screenWidth(640.0), screenHeight(480.0)
+    Game(bool fullscreen = false) : screenWidth(640.0), screenHeight(480.0),
+        keyPressed(SDLK_LAST, false), fullScreen(fullscreen), track(40, 0.75)
     { }
 
     int run()
@@ -88,7 +111,7 @@ class Game
 
         surface = setVideoMode();
 
-        SDL_WM_SetCaption("Kolarz", NULL);
+        SDL_WM_SetCaption(PACKAGE_STRING, NULL);
 
         while (!keyPressed[SDLK_ESCAPE] && event.type != SDL_QUIT)
         {
@@ -100,7 +123,7 @@ class Game
             {
                 if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
                 {
-                    keyPressed[event.key.keysym.sym] =static_cast<bool>(event.key.state);
+                    keyPressed[event.key.keysym.sym] = static_cast<bool>(event.key.state);
                 }
 
                 if (event.type == SDL_VIDEORESIZE)
