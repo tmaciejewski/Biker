@@ -21,7 +21,7 @@
 #include "object.h"
 
 
-Object::Object()
+Object::Object(GLfloat _x, GLfloat _y) : x(_x), y(_y)
 {
 
 }

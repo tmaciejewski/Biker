@@ -25,15 +25,15 @@
 
 class Object
 {
-	public:
-		Object();
-		virtual ~Object();
+    public:
+        Object(GLfloat _x = 0.0, GLfloat _y = 0.0);
+        virtual ~Object();
 
-        virtual void update() = 0;
-        virtual void display() = 0;
-        virtual void reset() = 0;
+        virtual void update() { };
+        virtual void display() { };
+        virtual void reset() { };
 
-	protected:
+    protected:
 
         GLfloat x, y;
 };
