@@ -52,11 +52,16 @@ void Track::drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter, float
 void Track::display()
 {
     glPushMatrix();
-    glColor3f(0.0, 1.0, 0.0);
-    drawEllipse(x, 0.0, y, 10*w, 10*w);    // outer field
+    glColor3f(0.0, 0.8, 0.0);
+    glBegin(GL_QUADS);
+        glVertex3f(x-2*w, 0, y-w);
+        glVertex3f(x+2*w, 0, y-w);
+        glVertex3f(x+2*w, 0, y+w);
+        glVertex3f(x-2*w, 0, y+w);
+    glEnd();
     glColor3f(0.23, 0.23, 0.23);
     drawEllipse(x, 0.1, y, w, ratio*w);    // track
-    glColor3f(0.0, 1.0, 0.0);
+    glColor3f(0.0, 0.8, 0.0);
     drawEllipse(x, 0.2, y, w2, ratio*w2);  // inner field
     glPopMatrix();
 }

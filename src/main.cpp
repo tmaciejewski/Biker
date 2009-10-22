@@ -35,27 +35,40 @@ class Game
 {
     GLfloat screenWidth, screenHeight;
     std::vector<bool> keyPressed;
-    GLfloat a, b;
     bool fullScreen;
-
+    GLfloat x, y, z, hAngle, vAngle;
     Track track;
 
     void update()
     {
         if (keyPressed[SDLK_LEFT])
-            a -= 0.1;
+            hAngle -= 0.01;
 
         if (keyPressed[SDLK_RIGHT])
-            a += 0.1;
+            hAngle += 0.01;
+
+        if (keyPressed[SDLK_PAGEUP])
+            vAngle += 0.01;
+
+        if (keyPressed[SDLK_PAGEDOWN])
+            vAngle -= 0.01;
 
         if (keyPressed[SDLK_UP])
-            b += 0.1;
+        {
+            y += sin(vAngle);
+            x += cos(vAngle)*sin(hAngle);
+            z -= cos(vAngle)*cos(hAngle);
+        }
 
         if (keyPressed[SDLK_DOWN])
-            b -= 0.1;
+        {
+            y -= sin(vAngle);
+            x -= cos(vAngle)*sin(hAngle);
+            z += cos(vAngle )*cos(hAngle);
+        }
 
         if (keyPressed[SDLK_RETURN])
-            std::cout << track.onTrack(0.0, b) << std::endl;
+            ;
 
     }
 
@@ -72,11 +85,14 @@ class Game
     void display()
     {
         reshape();
-        glClear(GL_COLOR_BUFFER_BIT);
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.3, 0.3, 0.6, 1.0);
+
         glLoadIdentity();
-        glTranslatef(0.0, -1.0, b);
-        glRotatef(a, 1.0, 0.0, 0.0);
+        glRotatef(-vAngle * (180.0 / M_PI), 1.0, 0.0, 0.0);
+        glRotatef(hAngle * (180.0 / M_PI), 0.0, 1.0, 0.0);
+        glTranslatef(-x, -y, -z);
         track.display();
         glFlush();
     }
@@ -98,7 +114,8 @@ class Game
     public:
 
     Game(bool fullscreen = false) : screenWidth(640.0), screenHeight(480.0),
-        keyPressed(SDLK_LAST, false), fullScreen(fullscreen), track(40, 0.75)
+        keyPressed(SDLK_LAST, false), fullScreen(fullscreen), x(0.0),
+        y(5.0), z(0.0), hAngle(0.0), vAngle(0.0), track(50, 0.5)
     { }
 
     int run()
