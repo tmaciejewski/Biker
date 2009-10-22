@@ -24,7 +24,14 @@
 
 Track::Track(float _w, float _ratio) : Object(), w(_w), ratio(_ratio)
 {
+    w2 = w - 3;
+}
 
+bool Track::onTrack(GLfloat _x, GLfloat _y)
+{
+    float track = (_x*_x) / (w*w) + (_y*_y) / (w*w*ratio*ratio);
+    float inner_grass = (_x*_x) / (w2*w2) + (_y*_y) / (w2*w2*ratio*ratio);
+    return (track <= 1.0 && inner_grass >= 1.0);
 }
 
 void Track::drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter, float r1, float r2, int pieces)
@@ -46,10 +53,10 @@ void Track::display()
 {
     glPushMatrix();
     glColor3f(0.0, 1.0, 0.0);
-    drawEllipse(x, 0.0, y, 10*w, 10*w);         // outer field
+    drawEllipse(x, 0.0, y, 10*w, 10*w);    // outer field
     glColor3f(0.23, 0.23, 0.23);
-    drawEllipse(x, 0.0, y, w, ratio*w);         // track
+    drawEllipse(x, 0.1, y, w, ratio*w);    // track
     glColor3f(0.0, 1.0, 0.0);
-    drawEllipse(x, 0.0, y, (w-3), ratio*(w-3)); // inner field
+    drawEllipse(x, 0.2, y, w2, ratio*w2);  // inner field
     glPopMatrix();
 }

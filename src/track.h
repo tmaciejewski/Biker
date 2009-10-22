@@ -29,10 +29,11 @@ class Track : public Object
         Track(float _w = 30, float _ratio = 1.0);
 
         void display();
+        bool onTrack(GLfloat _x, GLfloat _y);
 
     private:
 
-        float w, ratio;
+        float w, w2, ratio;
 
         void drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter, float r1, float r2, int pieces = 32);
 

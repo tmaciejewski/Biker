@@ -1,4 +1,4 @@
-//      kolarz.cpp
+//      main.cpp
 //
 //      Copyright 2009 Tomasz Maciejewski <ponton@jabster.pl>
 //
@@ -49,10 +49,13 @@ class Game
             a += 0.1;
 
         if (keyPressed[SDLK_UP])
-            b += 1.0;
+            b += 0.1;
 
         if (keyPressed[SDLK_DOWN])
-            b -= 1.0;
+            b -= 0.1;
+
+        if (keyPressed[SDLK_RETURN])
+            std::cout << track.onTrack(0.0, b) << std::endl;
 
     }
 
@@ -72,7 +75,7 @@ class Game
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.3, 0.3, 0.6, 1.0);
         glLoadIdentity();
-        glTranslatef(0.0, -1.0, 2*b);
+        glTranslatef(0.0, -1.0, b);
         glRotatef(a, 1.0, 0.0, 0.0);
         track.display();
         glFlush();
