@@ -1,3 +1,11 @@
-object.o: object.cpp object.h
+object.o: object.cpp object.h /usr/include/GL/gl.h \
+  /usr/include/GL/glext.h \
+  /usr/lib/gcc/x86_64-linux-gnu/4.3.4/include/stddef.h
 
 object.h:
+
+/usr/include/GL/gl.h:
+
+/usr/include/GL/glext.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.3.4/include/stddef.h:
