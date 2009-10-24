@@ -1,4 +1,4 @@
-//      object.h
+//      biker.h
 //
 //      Copyright 2009 Tomasz Maciejewski <ponton@jabster.pl>
 //
@@ -18,25 +18,29 @@
 //      MA 02110-1301, USA.
 
 
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef BIKER_H
+#define BIKER_H
 
-#include <GL/gl.h>
-#include <vector>
+#include "object.h"
+#include "track.h"
 
-class Object
+class Biker: public Object
 {
     public:
-        Object(GLfloat _x = 0.0, GLfloat _y = 0.0);
-        virtual ~Object();
+        Biker(const Track &_track);
 
-        virtual void update(const std::vector<bool> &keyPressed) { };
-        virtual void display() const { };
-        virtual void reset() { };
+        void display() const;
+        void update(const std::vector<bool> &keyPressed);
+        void reset();
 
-    protected:
+        GLfloat getX() { return x; }
+        GLfloat getY() { return y; }
 
-        GLfloat x, y;
+    private:
+        GLfloat w, l, h, angle, speed;
+        const Track &track;
+
+        void limitSpeed(GLfloat &speed, const GLfloat limit[]);
 };
 
-#endif /* OBJECT_H */
+#endif /* BIKER_H */

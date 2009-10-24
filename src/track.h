@@ -26,16 +26,18 @@
 class Track : public Object
 {
     public:
-        Track(float _w = 30, float _ratio = 1.0);
+        Track(GLfloat size = 30, GLfloat _ratio = 1.0, GLfloat _w = 5);
 
-        void display();
-        bool onTrack(GLfloat _x, GLfloat _y);
+        void display() const;
+        bool onTrack(GLfloat _x, GLfloat _y) const;
+        GLfloat startY() const;
 
     private:
 
-        float w, w2, ratio;
+        GLfloat w, w2, ratio;
 
-        void drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter, float r1, float r2, int pieces = 32);
+        void drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter,
+            GLfloat r1, GLfloat r2, int pieces = 32) const;
 
 };
 

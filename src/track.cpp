@@ -22,25 +22,31 @@
 #include <cmath>
 #include <iostream>
 
-Track::Track(float _w, float _ratio) : Object(), w(_w), ratio(_ratio)
+Track::Track(GLfloat size, GLfloat _ratio, GLfloat _w) : Object(), w(size), ratio(_ratio)
 {
-    w2 = w - 3;
+    w2 = size - _w;
 }
 
-bool Track::onTrack(GLfloat _x, GLfloat _y)
+bool Track::onTrack(GLfloat _x, GLfloat _y) const
 {
-    float track = (_x*_x) / (w*w) + (_y*_y) / (w*w*ratio*ratio);
-    float inner_grass = (_x*_x) / (w2*w2) + (_y*_y) / (w2*w2*ratio*ratio);
+    GLfloat track = (_x*_x) / (w*w) + (_y*_y) / (w*w*ratio*ratio);
+    GLfloat inner_grass = (_x*_x) / (w2*w2) + (_y*_y) / (w2*w2*ratio*ratio);
     return (track <= 1.0 && inner_grass >= 1.0);
 }
 
-void Track::drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter, float r1, float r2, int pieces)
+GLfloat Track::startY() const
+{
+    return ratio * w2 + ratio * (w - w2) / 2;
+}
+
+void Track::drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter,
+    GLfloat r1, GLfloat r2, int pieces) const
 {
     glBegin(GL_TRIANGLE_FAN);
         glVertex3f(xcenter, ycenter, zcenter);
         for(int i = -pieces/2; i <= pieces/2; ++i)
         {
-            float angle = M_PI * i / float(pieces/2);
+            GLfloat angle = M_PI * i / GLfloat(pieces/2);
             GLfloat x = xcenter + r1*sin(angle);
             GLfloat y = ycenter;
             GLfloat z = zcenter + r2*cos(angle);
@@ -49,7 +55,7 @@ void Track::drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter, float
     glEnd();
 }
 
-void Track::display()
+void Track::display() const
 {
     glPushMatrix();
     glColor3f(0.0, 0.8, 0.0);
@@ -60,8 +66,8 @@ void Track::display()
         glVertex3f(x-2*w, 0, y+w);
     glEnd();
     glColor3f(0.23, 0.23, 0.23);
-    drawEllipse(x, 0.1, y, w, ratio*w);    // track
+    drawEllipse(x, 0.0, y, w, ratio*w);    // track
     glColor3f(0.0, 0.8, 0.0);
-    drawEllipse(x, 0.2, y, w2, ratio*w2);  // inner field
+    drawEllipse(x, 0.0, y, w2, ratio*w2);  // inner field
     glPopMatrix();
 }

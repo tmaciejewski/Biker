@@ -28,16 +28,18 @@
 #include <vector>
 
 #include "track.h"
+#include "biker.h"
 
 #include "../config.h"
 
 class Game
 {
-    GLfloat screenWidth, screenHeight;
+    GLsizei screenWidth, screenHeight;
     std::vector<bool> keyPressed;
     bool fullScreen;
     GLfloat x, y, z, hAngle, vAngle;
     Track track;
+    Biker biker;
 
     void update()
     {
@@ -70,30 +72,46 @@ class Game
         if (keyPressed[SDLK_RETURN])
             ;
 
-    }
-
-    void reshape()
-    {
-        glViewport(0, 0, (GLsizei) screenWidth, (GLsizei)  screenHeight);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        gluPerspective(90.0, screenWidth / screenHeight, 0.0, 100.0);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
+        track.update(keyPressed);
+        biker.update(keyPressed);
     }
 
     void display()
     {
-        reshape();
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.3, 0.3, 0.6, 1.0);
 
+        // set perspectivic view
+        glViewport(0, 0, screenWidth, screenHeight);
+        glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glRotatef(-vAngle * (180.0 / M_PI), 1.0, 0.0, 0.0);
-        glRotatef(hAngle * (180.0 / M_PI), 0.0, 1.0, 0.0);
-        glTranslatef(-x, -y, -z);
+        gluPerspective(60.0, screenWidth / screenHeight, 0.0, 100.0);
+
+        // draw scene
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        gluLookAt(biker.getX() - 10.0, 40.0, biker.getY() - 10.0, biker.getX(), 0.0, biker.getY(), 0.0, 1.0, 0.0);
+        //glRotatef(-vAngle * (180.0 / M_PI), 1.0, 0.0, 0.0);
+        //glRotatef(hAngle * (180.0 / M_PI), 0.0, 1.0, 0.0);
+        //glTranslatef(-x, -y, -z);
         track.display();
+        biker.display();
+
+        // set orthographical view
+        glViewport(screenWidth - 100, screenHeight - 100, 100, 100);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(50.0, 50.0, -50.0, 100.0, 0.0, 100.0);
+
+        // draw map
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        // gluLookAt(biker.getX(), 100.0, biker.getY(), biker.getX(), 0.0, biker.getY(), 1.0, 0.0, 0.0);
+        glTranslatef(biker.getX(), biker.getY(), 0.0);
+        glRotatef(90.0, 1.0, 0.0, 0.0);
+        //glTranslatef(0.0, 0.0, -10.0);
+        track.display();
+        biker.display();
+
         glFlush();
     }
 
@@ -111,12 +129,22 @@ class Game
         return surface;
     }
 
+    void initGL()
+    {
+        glClearColor(0.4, 0.4, 1.0, 0.0);
+        //glEnable(GL_DEPTH_TEST);
+        //glDepthFunc(GL_EQUAL);
+        //glClearDepth(1.0);
+    }
+
     public:
 
-    Game(bool fullscreen = false) : screenWidth(640.0), screenHeight(480.0),
-        keyPressed(SDLK_LAST, false), fullScreen(fullscreen), x(0.0),
-        y(5.0), z(0.0), hAngle(0.0), vAngle(0.0), track(50, 0.5)
-    { }
+    Game(bool fullscreen = false) : screenWidth(640), screenHeight(480),
+        keyPressed(SDLK_LAST, false), fullScreen(fullscreen), x(-5.0),
+        y(20.0), hAngle(M_PI_2), vAngle(-M_PI_4), track(500, 0.5, 50), biker(track)
+    {
+        z = track.startY();
+    }
 
     int run()
     {
@@ -132,6 +160,8 @@ class Game
         surface = setVideoMode();
 
         SDL_WM_SetCaption(PACKAGE_STRING, NULL);
+
+        initGL();
 
         while (!keyPressed[SDLK_ESCAPE] && event.type != SDL_QUIT)
         {
@@ -155,7 +185,6 @@ class Game
                         SDL_FreeSurface(surface);
 
                     surface = setVideoMode();
-                    reshape();
                 }
             }
 
