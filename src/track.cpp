@@ -68,6 +68,6 @@ void Track::display() const
     glColor3f(0.23, 0.23, 0.23);
     drawEllipse(x, 0.0, y, w, ratio*w);    // track
     glColor3f(0.0, 0.8, 0.0);
-    drawEllipse(x, 0.0, y, w2, ratio*w2);  // inner field
+    drawEllipse(x, 10.0, y, w2, ratio*w2);  // inner field
     glPopMatrix();
 }

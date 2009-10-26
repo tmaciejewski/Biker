@@ -32,6 +32,8 @@
 
 #include "../config.h"
 
+GLfloat a;
+
 class Game
 {
     GLsizei screenWidth, screenHeight;
@@ -70,7 +72,7 @@ class Game
         }
 
         if (keyPressed[SDLK_RETURN])
-            ;
+            a += 0.1;
 
         track.update(keyPressed);
         biker.update(keyPressed);
@@ -89,10 +91,10 @@ class Game
         // draw scene
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        gluLookAt(biker.getX() - 10.0, 40.0, biker.getY() - 10.0, biker.getX(), 0.0, biker.getY(), 0.0, 1.0, 0.0);
-        //glRotatef(-vAngle * (180.0 / M_PI), 1.0, 0.0, 0.0);
-        //glRotatef(hAngle * (180.0 / M_PI), 0.0, 1.0, 0.0);
-        //glTranslatef(-x, -y, -z);
+        //gluLookAt(biker.getX() - 10.0, 40.0, biker.getY() - 10.0, biker.getX(), 0.0, biker.getY(), 0.0, 1.0, 0.0);
+        glRotatef(-vAngle * (180.0 / M_PI), 1.0, 0.0, 0.0);
+        glRotatef(hAngle * (180.0 / M_PI), 0.0, 1.0, 0.0);
+        glTranslatef(-x, -y, -z);
         track.display();
         biker.display();
 
@@ -100,15 +102,14 @@ class Game
         glViewport(screenWidth - 100, screenHeight - 100, 100, 100);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glOrtho(50.0, 50.0, -50.0, 100.0, 0.0, 100.0);
+        glOrtho(-50.0, 50.0, -50.0, 50.0, -100.0, 0.0);
 
         // draw map
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        // gluLookAt(biker.getX(), 100.0, biker.getY(), biker.getX(), 0.0, biker.getY(), 1.0, 0.0, 0.0);
-        glTranslatef(biker.getX(), biker.getY(), 0.0);
+        glTranslatef(-biker.getX(), biker.getY(), 0.0);
         glRotatef(90.0, 1.0, 0.0, 0.0);
-        //glTranslatef(0.0, 0.0, -10.0);
+
         track.display();
         biker.display();
 
@@ -133,8 +134,9 @@ class Game
     {
         glClearColor(0.4, 0.4, 1.0, 0.0);
         //glEnable(GL_DEPTH_TEST);
-        //glDepthFunc(GL_EQUAL);
+        //glDepthFunc(GL_LEQUAL);
         //glClearDepth(1.0);
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
 
     public:

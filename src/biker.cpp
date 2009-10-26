@@ -103,7 +103,7 @@ void Biker::limitSpeed(GLfloat &speed, const GLfloat limit[])
 void Biker::update(const std::vector<bool> &keyPressed)
 {
     const GLfloat speedLimit[] = {2.0, 0.1}, turnSpeed = 0.008;
-    const GLfloat accel = 0.001, friction = 0.0005;
+    const GLfloat accel = 0.002, friction = 0.0005;
 
     if (keyPressed['r'])
         reset();
