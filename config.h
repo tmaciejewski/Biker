@@ -1,11 +1,20 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to 1 if you have the <GL/glu.h> header file. */
+#define HAVE_GL_GLU_H 1
+
+/* Define to 1 if you have the <GL/gl.h> header file. */
+#define HAVE_GL_GL_H 1
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
 /* Define to 1 if you have the <memory.h> header file. */
 #define HAVE_MEMORY_H 1
+
+/* Define to 1 if you have the <SDL/SDL.h> header file. */
+#define HAVE_SDL_SDL_H 1
 
 /* Define to 1 if stdbool.h conforms to C99. */
 #define HAVE_STDBOOL_H 1

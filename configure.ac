@@ -16,6 +16,9 @@ AC_PROG_CC
 
 # Checks for header files.
 AC_CHECK_HEADERS([unistd.h])
+AC_CHECK_HEADERS([GL/gl.h])
+AC_CHECK_HEADERS([GL/glu.h])
+AC_CHECK_HEADERS([SDL/SDL.h])
 AC_CONFIG_FILES([Makefile src/Makefile])
 
 # Checks for typedefs, structures, and compiler characteristics.

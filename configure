@@ -4353,6 +4353,42 @@ fi
 
 done
 
+for ac_header in GL/gl.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "GL/gl.h" "ac_cv_header_GL_gl_h" "$ac_includes_default"
+if test "x$ac_cv_header_GL_gl_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_GL_GL_H 1
+_ACEOF
+
+fi
+
+done
+
+for ac_header in GL/glu.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "GL/glu.h" "ac_cv_header_GL_glu_h" "$ac_includes_default"
+if test "x$ac_cv_header_GL_glu_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_GL_GLU_H 1
+_ACEOF
+
+fi
+
+done
+
+for ac_header in SDL/SDL.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "SDL/SDL.h" "ac_cv_header_SDL_SDL_h" "$ac_includes_default"
+if test "x$ac_cv_header_SDL_SDL_h" = x""yes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_SDL_SDL_H 1
+_ACEOF
+
+fi
+
+done
+
 ac_config_files="$ac_config_files Makefile src/Makefile"
 
 
