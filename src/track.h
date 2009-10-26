@@ -37,7 +37,10 @@ class Track : public Object
         GLfloat w, w2, ratio;
 
         void drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter,
-            GLfloat r1, GLfloat r2, int pieces = 32) const;
+            GLfloat r1, GLfloat r2, int pieces = 64) const;
+
+        void drawField() const;
+        void drawPost(GLfloat x, GLfloat y) const;
 
 };
 

@@ -42,32 +42,51 @@ GLfloat Track::startY() const
 void Track::drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter,
     GLfloat r1, GLfloat r2, int pieces) const
 {
+    glPushMatrix();
+    glTranslatef(xcenter, ycenter, zcenter);
     glBegin(GL_TRIANGLE_FAN);
-        glVertex3f(xcenter, ycenter, zcenter);
+        glVertex3f(0.0, 0.0, 0.0);
         for(int i = -pieces/2; i <= pieces/2; ++i)
         {
             GLfloat angle = M_PI * i / GLfloat(pieces/2);
-            GLfloat x = xcenter + r1*sin(angle);
-            GLfloat y = ycenter;
-            GLfloat z = zcenter + r2*cos(angle);
-            glVertex3f(x, y, z);
+            glVertex3f(r1*sin(angle), 0.0, r2*cos(angle));
         }
     glEnd();
+    glPopMatrix();
+}
+
+void Track::drawField() const
+{
+    glPushMatrix();
+    glTranslatef(x, 0.0, y);
+    glBegin(GL_QUADS);
+        glVertex3f(-2*w, 0.0, -w);
+        glVertex3f(2*w, 0.0, -w);
+        glVertex3f(2*w, 0.0, w);
+        glVertex3f(-2*w, 0.0, w);
+    glEnd();
+    glPopMatrix();
+}
+
+void Track::drawPost(GLfloat x, GLfloat y) const
+{
+    glPushMatrix();
+    glColor3f(0.9, 0.9, 0.9);
+    glTranslatef(x, 0.0, y);
+    drawCuboid(1.0, 1.0, 20.0);
+    glPopMatrix();
 }
 
 void Track::display() const
 {
     glPushMatrix();
     glColor3f(0.1, 0.1, 0.1);
-    glBegin(GL_QUADS);
-        glVertex3f(x-2*w, 0, y-w);
-        glVertex3f(x+2*w, 0, y-w);
-        glVertex3f(x+2*w, 0, y+w);
-        glVertex3f(x-2*w, 0, y+w);
-    glEnd();
+    drawField();
     glColor3f(0.8, 0.23, 0.23);
     drawEllipse(x, 0.0, y, w, ratio*w);    // track
     glColor3f(0.1, 0.1, 0.1);
-    drawEllipse(x, 10.0, y, w2, ratio*w2);  // inner field
+    drawEllipse(x, 0.0, y, w2, ratio*w2);  // inner field
+    drawPost(0.0, w2*ratio - 2.0);
+    drawPost(0.0, w*ratio + 2.0);
     glPopMatrix();
 }
