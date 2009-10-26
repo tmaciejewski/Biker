@@ -70,10 +70,10 @@ void Track::drawField() const
     glPushMatrix();
     glTranslatef(x, 0.0, y);
     glBegin(GL_QUADS);
-        glVertex3f(-2*w, 0.0, -2*w);
-        glVertex3f(2*w, 0.0, -2*w);
-        glVertex3f(2*w, 0.0, 2*w);
         glVertex3f(-2*w, 0.0, 2*w);
+        glVertex3f(2*w, 0.0, 2*w);
+        glVertex3f(2*w, 0.0, -2*w);
+        glVertex3f(-2*w, 0.0, -2*w);
     glEnd();
     glPopMatrix();
 }
@@ -105,9 +105,9 @@ void Track::display() const
     glColor3f(0.1, 0.1, 0.1);
     drawField();
     glColor3f(0.8, 0.23, 0.23);
-    drawEllipse(x, 0.0, y, w, ratio*w);    // track
+    drawEllipse(x, 0.1, y, w, ratio*w);    // track
     glColor3f(0.1, 0.1, 0.1);
-    drawEllipse(x, 0.0, y, w2, ratio*w2);  // inner field
+    drawEllipse(x, 0.2, y, w2, ratio*w2);  // inner field
     drawPost(0.0, w2*ratio - 2.0);
     drawPost(0.0, w*ratio + 2.0);
     for (vector<TreeCoord>::const_iterator it = tree.begin(); it != tree.end(); ++it)

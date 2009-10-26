@@ -86,7 +86,7 @@ class Game
         glViewport(0, 0, screenWidth, screenHeight);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluPerspective(60.0, screenWidth / screenHeight, 0.0, 100.0);
+        gluPerspective(60.0, screenWidth / screenHeight, 1.0, 500.0);
 
         // draw scene
         glMatrixMode(GL_MODELVIEW);
@@ -133,11 +133,11 @@ class Game
     void initGL()
     {
         glClearColor(0.4, 0.4, 1.0, 0.0);
-        //glEnable(GL_DEPTH_TEST);
-        //glDepthFunc(GL_EQUAL);
-        //glClearDepth(1.0);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_LEQUAL);
+        glClearDepth(1.0);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-        //glEnable(GL_CULL_FACE);
+        glEnable(GL_CULL_FACE);
     }
 
     public:

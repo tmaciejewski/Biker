@@ -42,10 +42,10 @@ void Object::drawCuboid(GLfloat w, GLfloat l, GLfloat h) const
         glVertex3f(w/2, 0.0, -l/2);
 
         // up
-        glVertex3f(w/2, h, l/2);
-        glVertex3f(-w/2, h, l/2);
-        glVertex3f(-w/2, h, -l/2);
         glVertex3f(w/2, h, -l/2);
+        glVertex3f(-w/2, h, -l/2);
+        glVertex3f(-w/2, h, l/2);
+        glVertex3f(w/2, h, l/2);
 
         // back
         glVertex3f(-w/2, 0.0, -l/2);
@@ -54,10 +54,10 @@ void Object::drawCuboid(GLfloat w, GLfloat l, GLfloat h) const
         glVertex3f(w/2, 0.0, -l/2);
 
         // front
-        glVertex3f(-w/2, 0.0, l/2);
-        glVertex3f(-w/2, h, l/2);
-        glVertex3f(w/2, h, l/2);
         glVertex3f(w/2, 0.0, l/2);
+        glVertex3f(w/2, h, l/2);
+        glVertex3f(-w/2, h, l/2);
+        glVertex3f(-w/2, 0.0, l/2);
 
         // left
         glVertex3f(-w/2, 0.0, -l/2);
@@ -66,10 +66,10 @@ void Object::drawCuboid(GLfloat w, GLfloat l, GLfloat h) const
         glVertex3f(-w/2, h, -l/2);
 
         // right
-        glVertex3f(w/2, 0.0, -l/2);
-        glVertex3f(w/2, 0.0, l/2);
-        glVertex3f(w/2, h, l/2);
         glVertex3f(w/2, h, -l/2);
+        glVertex3f(w/2, h, l/2);
+        glVertex3f(w/2, 0.0, l/2);
+        glVertex3f(w/2, 0.0, -l/2);
 
     glEnd();
 }
