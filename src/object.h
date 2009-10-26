@@ -37,6 +37,8 @@ class Object
     protected:
 
         GLfloat x, y;
+
+        void drawCuboid(GLfloat w, GLfloat l, GLfloat h) const;
 };
 
 #endif /* OBJECT_H */

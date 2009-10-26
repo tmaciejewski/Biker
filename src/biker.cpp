@@ -43,45 +43,7 @@ void Biker::display() const
 
     glTranslatef(x, 0.0, y);
     glRotatef(angle * (180.0 / M_PI), 0.0, 1.0, 0.0);
-
-    glBegin(GL_QUADS);
-        // down
-        glVertex3f(w/2, 0.0, l/2);
-        glVertex3f(-w/2, 0.0, l/2);
-        glVertex3f(-w/2, 0.0, -l/2);
-        glVertex3f(w/2, 0.0, -l/2);
-
-        // up
-        glVertex3f(w/2, h, l/2);
-        glVertex3f(-w/2, h, l/2);
-        glVertex3f(-w/2, h, -l/2);
-        glVertex3f(w/2, h, -l/2);
-
-        // back
-        glVertex3f(-w/2, 0.0, -l/2);
-        glVertex3f(-w/2, h, -l/2);
-        glVertex3f(w/2, h, -l/2);
-        glVertex3f(w/2, 0.0, -l/2);
-
-        // front
-        glVertex3f(-w/2, 0.0, l/2);
-        glVertex3f(-w/2, h, l/2);
-        glVertex3f(w/2, h, l/2);
-        glVertex3f(w/2, 0.0, l/2);
-
-        // left
-        glVertex3f(-w/2, 0.0, -l/2);
-        glVertex3f(-w/2, 0.0, l/2);
-        glVertex3f(-w/2, h, l/2);
-        glVertex3f(-w/2, h, -l/2);
-
-        // right
-        glVertex3f(w/2, 0.0, -l/2);
-        glVertex3f(w/2, 0.0, l/2);
-        glVertex3f(w/2, h, l/2);
-        glVertex3f(w/2, h, -l/2);
-
-    glEnd();
+    drawCuboid(w, l, h);
     glPopMatrix();
 }
 
