@@ -32,13 +32,11 @@
 
 #include "../config.h"
 
-GLfloat a;
-
 class Game
 {
     GLsizei screenWidth, screenHeight;
     std::vector<bool> keyPressed;
-    bool fullScreen;
+    bool fullScreen, FPP;
     GLfloat x, y, z, hAngle, vAngle;
     Track track;
     Biker biker;
@@ -72,7 +70,11 @@ class Game
         }
 
         if (keyPressed[SDLK_RETURN])
-            a += 0.1;
+        {
+            FPP = !FPP;
+            keyPressed[SDLK_RETURN] = false;
+        }
+
 
         track.update(keyPressed);
         biker.update(keyPressed);
@@ -91,10 +93,16 @@ class Game
         // draw scene
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        //gluLookAt(biker.getX() - 10.0, 40.0, biker.getY() - 10.0, biker.getX(), 0.0, biker.getY(), 0.0, 1.0, 0.0);
-        glRotatef(-vAngle * (180.0 / M_PI), 1.0, 0.0, 0.0);
-        glRotatef(hAngle * (180.0 / M_PI), 0.0, 1.0, 0.0);
-        glTranslatef(-x, -y, -z);
+
+        if (FPP)
+            gluLookAt(biker.getX() - 10.0, 40.0, biker.getY(), biker.getX(), 0.0, biker.getY(), 0.0, 1.0, 0.0);
+        else
+        {
+            glRotatef(-vAngle * (180.0 / M_PI), 1.0, 0.0, 0.0);
+            glRotatef(hAngle * (180.0 / M_PI), 0.0, 1.0, 0.0);
+            glTranslatef(-x, -y, -z);
+        }
+
         track.display();
         biker.display();
 
@@ -105,6 +113,7 @@ class Game
         glOrtho(-50.0, 50.0, -50.0, 50.0, -100.0, 0.0);
 
         // draw map
+        glClear(GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         glTranslatef(-biker.getX(), biker.getY(), 0.0);
@@ -153,7 +162,7 @@ class Game
     public:
 
     Game(bool fullscreen = false) : screenWidth(640), screenHeight(480),
-        keyPressed(SDLK_LAST, false), fullScreen(fullscreen), x(-5.0),
+        keyPressed(SDLK_LAST, false), fullScreen(fullscreen), FPP(true), x(-5.0),
         y(20.0), hAngle(M_PI_2), vAngle(-M_PI_4), track(500, 0.5, 50), biker(track)
     {
         z = track.startY();
