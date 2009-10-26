@@ -1,5 +1,5 @@
 LIBS = -lSDL -lGL -lGLU
-CPPFLAGS = -O2 -Wall
+CPPFLAGS = -Wall
 
 bin_PROGRAMS = biker
-biker_SOURCES = track.cpp main.cpp object.cpp biker.cpp
+biker_SOURCES = track.cpp track.h main.cpp object.cpp object.h biker.cpp biker.h
