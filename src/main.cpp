@@ -86,7 +86,7 @@ class Game
         glViewport(0, 0, screenWidth, screenHeight);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluPerspective(60.0, screenWidth / screenHeight, 1.0, 500.0);
+        gluPerspective(60.0, screenWidth / screenHeight, 1.0, 1000.0);
 
         // draw scene
         glMatrixMode(GL_MODELVIEW);
