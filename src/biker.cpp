@@ -39,10 +39,7 @@ void Biker::display() const
 {
     glPushMatrix();
 
-    if (track.onTrack(x, y))
-        glColor3f(1.0, 0.0, 0.0);
-    else
-        glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 0.8, 0.2);
 
     glTranslatef(x, 0.0, y);
     glRotatef(angle * (180.0 / M_PI), 0.0, 1.0, 0.0);
