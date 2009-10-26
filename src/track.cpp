@@ -21,10 +21,20 @@
 #include "track.h"
 #include <cmath>
 #include <iostream>
+#include <cstdlib>
 
 Track::Track(GLfloat size, GLfloat _ratio, GLfloat _w) : Object(), w(size), ratio(_ratio)
 {
     w2 = size - _w;
+    for(unsigned i = 0; i < w*w/1000; ++i)
+    {
+        GLfloat x, y;
+        do {
+            x = rand() / (float)RAND_MAX * 2*w - w;
+            y = rand() / (float)RAND_MAX * 2*w - w;
+        } while (onTrack(x, y));
+        tree.push_back(TreeCoord(x, y));
+    }
 }
 
 bool Track::onTrack(GLfloat _x, GLfloat _y) const
@@ -60,10 +70,10 @@ void Track::drawField() const
     glPushMatrix();
     glTranslatef(x, 0.0, y);
     glBegin(GL_QUADS);
-        glVertex3f(-2*w, 0.0, -w);
-        glVertex3f(2*w, 0.0, -w);
-        glVertex3f(2*w, 0.0, w);
-        glVertex3f(-2*w, 0.0, w);
+        glVertex3f(-2*w, 0.0, -2*w);
+        glVertex3f(2*w, 0.0, -2*w);
+        glVertex3f(2*w, 0.0, 2*w);
+        glVertex3f(-2*w, 0.0, 2*w);
     glEnd();
     glPopMatrix();
 }
@@ -74,6 +84,18 @@ void Track::drawPost(GLfloat x, GLfloat y) const
     glColor3f(0.9, 0.9, 0.9);
     glTranslatef(x, 0.0, y);
     drawCuboid(1.0, 1.0, 20.0);
+    glPopMatrix();
+}
+
+void Track::drawTree(GLfloat x, GLfloat y) const
+{
+    glPushMatrix();
+    glTranslatef(x, 0.0, y);
+    glColor3f(0.2, 0.1, 0.1);
+    drawCuboid(1.0, 1.0, 10.0);
+    glTranslatef(0.0, 10.0, 0.0);
+    glColor3f(0.1, 0.7, 0.2);
+    drawCuboid(5.0, 5.0, 10.0);
     glPopMatrix();
 }
 
@@ -88,5 +110,7 @@ void Track::display() const
     drawEllipse(x, 0.0, y, w2, ratio*w2);  // inner field
     drawPost(0.0, w2*ratio - 2.0);
     drawPost(0.0, w*ratio + 2.0);
+    for (vector<TreeCoord>::const_iterator it = tree.begin(); it != tree.end(); ++it)
+        drawTree(it->first, it->second);
     glPopMatrix();
 }

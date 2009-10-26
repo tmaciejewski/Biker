@@ -134,9 +134,10 @@ class Game
     {
         glClearColor(0.4, 0.4, 1.0, 0.0);
         //glEnable(GL_DEPTH_TEST);
-        //glDepthFunc(GL_LEQUAL);
+        //glDepthFunc(GL_EQUAL);
         //glClearDepth(1.0);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        //glEnable(GL_CULL_FACE);
     }
 
     public:
@@ -146,6 +147,7 @@ class Game
         y(20.0), hAngle(M_PI_2), vAngle(-M_PI_4), track(500, 0.5, 50), biker(track)
     {
         z = track.startY();
+        srand(time(0));
     }
 
     int run()

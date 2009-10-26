@@ -22,6 +22,10 @@
 #define TRACK_H
 
 #include "object.h"
+#include <vector>
+
+using std::vector;
+using std::pair;
 
 class Track : public Object
 {
@@ -35,12 +39,15 @@ class Track : public Object
     private:
 
         GLfloat w, w2, ratio;
+        typedef pair<GLfloat, GLfloat> TreeCoord;
+        vector<TreeCoord> tree;
 
         void drawEllipse(GLfloat xcenter, GLfloat ycenter, GLfloat zcenter,
             GLfloat r1, GLfloat r2, int pieces = 64) const;
 
         void drawField() const;
         void drawPost(GLfloat x, GLfloat y) const;
+        void drawTree(GLfloat x, GLfloat y) const;
 
 };
 
