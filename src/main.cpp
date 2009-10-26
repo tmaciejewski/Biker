@@ -133,11 +133,21 @@ class Game
     void initGL()
     {
         glClearColor(0.4, 0.4, 1.0, 0.0);
+
+        // depth buffer
         glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
-        glClearDepth(1.0);
+
+        // perspective correction
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+        // culling
         glEnable(GL_CULL_FACE);
+
+        // blending
+        glEnable (GL_BLEND);
+        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glShadeModel (GL_FLAT);
+
     }
 
     public:

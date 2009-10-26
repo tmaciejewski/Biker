@@ -94,7 +94,7 @@ void Track::drawTree(GLfloat x, GLfloat y) const
     glColor3f(0.2, 0.1, 0.1);
     drawCuboid(1.0, 1.0, 10.0);
     glTranslatef(0.0, 10.0, 0.0);
-    glColor3f(0.1, 0.7, 0.2);
+    glColor4f(0.1, 0.7, 0.2, 0.9);
     drawCuboid(5.0, 5.0, 10.0);
     glPopMatrix();
 }
