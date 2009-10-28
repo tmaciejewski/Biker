@@ -20,6 +20,7 @@
 
 #include "biker.h"
 #include <cmath>
+#include <GL/glu.h>
 
 Biker::Biker(const Track &_track) : Object(), w(1), l(10), h(5),
     track(_track)
@@ -91,4 +92,9 @@ void Biker::update(const std::vector<bool> &keyPressed)
         speed += friction;
     else
         speed = 0.0;
+}
+
+void Biker::setFPPCamera()
+{
+    gluLookAt(x, h/2, y, x + sin(angle), h/2, y + cos(angle), 0.0, 1.0, 0.0);
 }

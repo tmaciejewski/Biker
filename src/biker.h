@@ -36,6 +36,8 @@ class Biker: public Object
         GLfloat getX() { return x; }
         GLfloat getY() { return y; }
 
+        void setFPPCamera();
+
     private:
         GLfloat w, l, h, angle, speed;
         const Track &track;

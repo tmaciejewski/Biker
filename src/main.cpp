@@ -97,7 +97,7 @@ class Game
 
         // choose camera position
         if (FPP)
-            gluLookAt(biker.getX() - 10.0, 40.0, biker.getY(), biker.getX(), 0.0, biker.getY(), 0.0, 1.0, 0.0);
+            biker.setFPPCamera();
         else
         {
             glRotatef(-vAngle * (180.0 / M_PI), 1.0, 0.0, 0.0);
