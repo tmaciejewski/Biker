@@ -39,7 +39,7 @@ class Biker: public Object
         void setFPPCamera();
 
     private:
-        GLfloat w, l, h, angle, speed;
+        GLfloat w, l, h, angle, lean, speed;
         const Track &track;
 
         void limitSpeed(GLfloat &speed, const GLfloat limit[]);

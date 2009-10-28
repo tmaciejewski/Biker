@@ -34,6 +34,7 @@ void Biker::reset()
     y = track.startY();
     speed = 0.0;
     angle = M_PI_2;
+    lean = 0.0;
 }
 
 void Biker::display() const
@@ -55,43 +56,51 @@ void Biker::limitSpeed(GLfloat &speed, const GLfloat limit[])
 
     if (speed > limit[0])
         speed = limit[0];
-
-    if (speed > limit[1] && !track.onTrack(x, y))
-        speed = limit[1];
 }
 
 void Biker::update(const std::vector<bool> &keyPressed)
 {
     const GLfloat speedLimit[] = {2.0, 0.1}, turnSpeed = 0.008;
-    const GLfloat accel = 0.002, friction = 0.0005;
+    const GLfloat accel = 0.004;
+    GLfloat friction = 0.001;
+    const bool onTrack = track.onTrack(x, y);
+
+    if (!onTrack)
+        friction *= 10;
 
     if (keyPressed['r'])
         reset();
 
+    if (keyPressed['t'])
+        speed += 3.0; // turbo
+
     if (keyPressed['a'])
         angle += turnSpeed;
-
-    if (keyPressed['d'])
+    else if (keyPressed['d'])
         angle -= turnSpeed;
 
-    if (keyPressed['w'])
+    if (keyPressed['w'] && speed < speedLimit[(onTrack ? 0 : 1)])
+    {
+        // we're accelerating
         speed += accel;
-
-    if (keyPressed['s'])
+    }
+    else if (keyPressed['s'] && speed > -speedLimit[1])
+    {
         speed -= accel;
+    }
+    // free ride
+    else if (speed > friction)
+        speed -= friction;
+    else if (speed < -friction)
+        speed += friction;
+    else
+        speed = 0.0; // the speed is so near 0.0, that it is in fact 0.0
 
     // speed limitations
     limitSpeed(speed, speedLimit);
 
     y += speed*cos(angle);
     x += speed*sin(angle);
-
-    if (speed > friction)
-        speed -= friction;
-    else if (speed < -friction)
-        speed += friction;
-    else
-        speed = 0.0;
 }
 
 void Biker::setFPPCamera()
