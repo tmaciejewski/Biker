@@ -23,8 +23,10 @@
 #include <GL/glu.h>
 
 Biker::Biker(const Track &_track) : Object(), w(1), l(10), h(5),
-    track(_track)
+    leanLimit(0.01), track(_track)
 {
+    speedLimit[0] = 2.0;
+    speedLimit[1] = 0.2;
     reset();
 }
 
@@ -35,33 +37,23 @@ void Biker::reset()
     speed = 0.0;
     angle = M_PI_2;
     lean = 0.0;
+    leanAngle = 0.0;
 }
 
 void Biker::display() const
 {
     glPushMatrix();
-
     glColor3f(1.0, 0.8, 0.2);
-
     glTranslatef(x, 0.0, y);
     glRotatef(angle * (180.0 / M_PI), 0.0, 1.0, 0.0);
+    glRotatef(leanAngle * (180.0 / M_PI), 0.0, 0.0, 1.0);
     drawCuboid(w, l, h);
     glPopMatrix();
 }
 
-void Biker::limitSpeed(GLfloat &speed, const GLfloat limit[])
-{
-    if (speed < -limit[1])
-        speed = -limit[1];
-
-    if (speed > limit[0])
-        speed = limit[0];
-}
-
 void Biker::update(const std::vector<bool> &keyPressed)
 {
-    const GLfloat speedLimit[] = {2.0, 0.1}, turnSpeed = 0.008;
-    const GLfloat accel = 0.004;
+    const GLfloat accel = 0.004, turnSpeed = 0.0001;
     GLfloat friction = 0.001;
     const bool onTrack = track.onTrack(x, y);
 
@@ -72,12 +64,21 @@ void Biker::update(const std::vector<bool> &keyPressed)
         reset();
 
     if (keyPressed['t'])
-        speed += 3.0; // turbo
+        speed += 0.1; // turbo
 
-    if (keyPressed['a'])
-        angle += turnSpeed;
-    else if (keyPressed['d'])
-        angle -= turnSpeed;
+    if (keyPressed['a'] && lean < leanLimit)
+        lean += turnSpeed;
+    else if (keyPressed['d'] && lean > -leanLimit)
+        lean -= turnSpeed;
+    else if (lean > turnSpeed)
+        lean -= turnSpeed;
+    else if (lean < -turnSpeed)
+        lean += turnSpeed;
+    else
+        lean = 0.0;
+
+    leanAngle = (speed/speedLimit[0]) *
+        (-lean/leanLimit * M_PI_4/2);
 
     if (keyPressed['w'] && speed < speedLimit[(onTrack ? 0 : 1)])
     {
@@ -86,6 +87,7 @@ void Biker::update(const std::vector<bool> &keyPressed)
     }
     else if (keyPressed['s'] && speed > -speedLimit[1])
     {
+        // we're braking or going reverse
         speed -= accel;
     }
     // free ride
@@ -96,14 +98,16 @@ void Biker::update(const std::vector<bool> &keyPressed)
     else
         speed = 0.0; // the speed is so near 0.0, that it is in fact 0.0
 
-    // speed limitations
-    limitSpeed(speed, speedLimit);
 
+    angle += lean;
     y += speed*cos(angle);
     x += speed*sin(angle);
 }
 
 void Biker::setFPPCamera()
 {
-    gluLookAt(x, h/2, y, x + sin(angle), h/2, y + cos(angle), 0.0, 1.0, 0.0);
+    GLfloat p = sin(-leanAngle) * h / 2;
+    GLfloat xprim = p * cos(angle), yprim = - p * sin(angle);
+
+    gluLookAt(x + xprim, h/2, y + yprim, x + xprim + sin(angle), h/2, y + yprim + cos(angle), xprim, h/2, yprim);
 }
