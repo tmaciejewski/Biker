@@ -83,6 +83,7 @@ class Game
     void display()
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glDepthFunc(GL_LEQUAL);
 
         // set perspectivic view
         glViewport(0, 0, screenWidth, screenHeight);
@@ -94,6 +95,7 @@ class Game
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
+        // choose camera position
         if (FPP)
             gluLookAt(biker.getX() - 10.0, 40.0, biker.getY(), biker.getX(), 0.0, biker.getY(), 0.0, 1.0, 0.0);
         else
@@ -113,7 +115,7 @@ class Game
         glOrtho(-50.0, 50.0, -50.0, 50.0, -100.0, 0.0);
 
         // draw map
-        glClear(GL_DEPTH_BUFFER_BIT);
+        glDepthFunc(GL_ALWAYS);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         glTranslatef(-biker.getX(), biker.getY(), 0.0);
@@ -153,9 +155,9 @@ class Game
         glEnable(GL_CULL_FACE);
 
         // blending
-        glEnable (GL_BLEND);
-        glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glShadeModel (GL_FLAT);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glShadeModel(GL_FLAT);
 
     }
 
