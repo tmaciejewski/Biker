@@ -165,8 +165,8 @@ class Game
 
     public:
 
-    Game(bool fullscreen = false) : screenWidth(640), screenHeight(480),
-        keyPressed(SDLK_LAST, false), fullScreen(fullscreen), FPP(true), x(-5.0),
+    Game(unsigned w, unsigned h, bool fullscreen = false) : screenWidth(w),
+        screenHeight(h), keyPressed(SDLK_LAST, false), fullScreen(fullscreen), FPP(true), x(-5.0),
         y(20.0), hAngle(M_PI_2), vAngle(-M_PI_4), track(500, 0.7, 50), biker(track)
     {
         z = track.startY();
@@ -226,6 +226,6 @@ class Game
 
 int main()
 {
-    Game game;
+    Game game(800, 600);
     return game.run();
 }

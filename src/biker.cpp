@@ -39,6 +39,8 @@ void Biker::reset()
     angle = M_PI_2;
     lean = 0.0;
     leanAngle = 0.0;
+
+    spot.clear();
     for(int i = 0; i < 20; ++i)
     {
         spot.push_back((rand()/(float)RAND_MAX) * 1.0 - 0.5);
