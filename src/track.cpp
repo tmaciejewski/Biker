@@ -23,7 +23,8 @@
 #include <iostream>
 #include <cstdlib>
 
-Track::Track(GLfloat size, GLfloat _ratio, GLfloat _w) : Object(), w(size), ratio(_ratio)
+Track::Track(GLfloat size, GLfloat _ratio, GLfloat _w) : Object(),
+    w(size), ratio(_ratio)
 {
     w2 = size - _w;
     for(unsigned i = 0; i < w*w/1000; ++i)

@@ -115,7 +115,8 @@ void Biker::setFPPCamera()
     GLfloat p = sin(-leanAngle) * h / 2;
     GLfloat xprim = p * cos(angle), yprim = - p * sin(angle);
 
-    gluLookAt(x + xprim, h/2, y + yprim, x + xprim + sin(angle), h/2, y + yprim + cos(angle), xprim, h/2, yprim);
+    gluLookAt(x + xprim, h/2, y + yprim, x + xprim + sin(angle), h/2,
+        y + yprim + cos(angle), xprim, h/2, yprim);
 }
 
 void Biker::drawSpots() const
@@ -124,17 +125,17 @@ void Biker::drawSpots() const
     {
         glColor3f(0.0, 0.0, 0.0);
         glBegin(GL_QUADS);
-            for (unsigned i = 0; i < spot.size(); i += 2)
-            {
-                GLfloat x, y;
-                y = spot[i + 1];
-                x = spot[i];
+        for (unsigned i = 0; i < spot.size(); i += 2)
+        {
+            GLfloat x, y;
+            y = spot[i + 1];
+            x = spot[i];
 
-                glVertex3f(x, y, -1.0);
-                glVertex3f(x + 0.1, y, -1.0);
-                glVertex3f(x + 0.1, y + 0.1, -1.0);
-                glVertex3f(x, y + 0.1, -1.0);
-            }
+            glVertex3f(x, y, -1.0);
+            glVertex3f(x + 0.1, y, -1.0);
+            glVertex3f(x + 0.1, y + 0.1, -1.0);
+            glVertex3f(x, y + 0.1, -1.0);
+        }
         glEnd();
     }
 }
