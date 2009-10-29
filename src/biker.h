@@ -30,6 +30,7 @@ class Biker: public Object
         Biker(const Track &_track);
 
         void display() const;
+        void drawSpots() const;
         void update(const std::vector<bool> &keyPressed);
         void reset();
 
@@ -42,6 +43,7 @@ class Biker: public Object
         GLfloat w, l, h, angle, lean, leanAngle, speed;
         GLfloat speedLimit[2], leanLimit;
         const Track &track;
+        vector<GLfloat> spot;
 };
 
 #endif /* BIKER_H */

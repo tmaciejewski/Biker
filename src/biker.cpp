@@ -20,6 +20,7 @@
 
 #include "biker.h"
 #include <cmath>
+#include <cstdlib>
 #include <GL/glu.h>
 
 Biker::Biker(const Track &_track) : Object(), w(1), l(10), h(5),
@@ -38,6 +39,11 @@ void Biker::reset()
     angle = M_PI_2;
     lean = 0.0;
     leanAngle = 0.0;
+    for(int i = 0; i < 20; ++i)
+    {
+        spot.push_back((rand()/(float)RAND_MAX) * 1.0 - 0.5);
+        spot.push_back((rand()/(float)RAND_MAX) * 1.0 - 0.5);
+    }
 }
 
 void Biker::display() const
@@ -110,4 +116,25 @@ void Biker::setFPPCamera()
     GLfloat xprim = p * cos(angle), yprim = - p * sin(angle);
 
     gluLookAt(x + xprim, h/2, y + yprim, x + xprim + sin(angle), h/2, y + yprim + cos(angle), xprim, h/2, yprim);
+}
+
+void Biker::drawSpots() const
+{
+    if (!track.onTrack(x, y))
+    {
+        glColor3f(0.0, 0.0, 0.0);
+        glBegin(GL_QUADS);
+            for (unsigned i = 0; i < spot.size(); i += 2)
+            {
+                GLfloat x, y;
+                y = spot[i + 1];
+                x = spot[i];
+
+                glVertex3f(x, y, -1.0);
+                glVertex3f(x + 0.1, y, -1.0);
+                glVertex3f(x + 0.1, y + 0.1, -1.0);
+                glVertex3f(x, y + 0.1, -1.0);
+            }
+        glEnd();
+    }
 }

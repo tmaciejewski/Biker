@@ -95,6 +95,8 @@ class Game
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
 
+        biker.drawSpots();
+
         // choose camera position
         if (FPP)
             biker.setFPPCamera();
@@ -165,7 +167,7 @@ class Game
 
     Game(bool fullscreen = false) : screenWidth(640), screenHeight(480),
         keyPressed(SDLK_LAST, false), fullScreen(fullscreen), FPP(true), x(-5.0),
-        y(20.0), hAngle(M_PI_2), vAngle(-M_PI_4), track(500, 0.5, 50), biker(track)
+        y(20.0), hAngle(M_PI_2), vAngle(-M_PI_4), track(500, 0.7, 50), biker(track)
     {
         z = track.startY();
         srand(time(0));
