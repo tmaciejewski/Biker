@@ -1,1 +1,13 @@
+DESCRIPTION
+
 A primitive OpenGL race game.
+
+CONTROLS
+
+W - accelerating
+S - braking/reverse
+A - left
+D - right
+Return - switch camera
+arrows - move camefra
+R - reset game
