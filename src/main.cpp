@@ -30,8 +30,6 @@
 #include "track.h"
 #include "biker.h"
 
-#include "../config.h"
-
 class Game
 {
     GLsizei screenWidth, screenHeight;
@@ -186,7 +184,7 @@ class Game
 
         surface = setVideoMode();
 
-        SDL_WM_SetCaption(PACKAGE_STRING, NULL);
+        SDL_WM_SetCaption("Biker", NULL);
 
         initGL();
 
